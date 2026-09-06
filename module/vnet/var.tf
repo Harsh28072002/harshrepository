@@ -1,0 +1,7 @@
+variable "vnet" {
+  
+}
+
+variable "rg" {
+  
+}
