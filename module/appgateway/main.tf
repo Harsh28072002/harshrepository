@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "PIP" {
-  for_each = var.agw
+  for_each            = var.agw
   name                = each.value.pip_name
   resource_group_name = var.rg[each.value.rg_key].rg_name
   location            = var.rg[each.value.rg_key].location
@@ -21,7 +21,7 @@ locals {
 }
 
 resource "azurerm_application_gateway" "AGW" {
-  for_each = var.agw
+  for_each            = var.agw
   name                = each.value.agw_name
   resource_group_name = var.rg[each.value.rg_key].rg_name
   location            = var.rg[each.value.rg_key].location
@@ -34,7 +34,7 @@ resource "azurerm_application_gateway" "AGW" {
 
   gateway_ip_configuration {
     name      = "ibm-prod-ip-configuration"
-    subnet_id = var.agw_subnet_ids[each.value.vnet_key] 
+    subnet_id = var.agw_subnet_ids[each.value.vnet_key]
   }
 
   frontend_port {
@@ -75,5 +75,5 @@ resource "azurerm_application_gateway" "AGW" {
     backend_address_pool_name  = local.agw_config[each.key].backend_pool
     backend_http_settings_name = local.agw_config[each.key].http_settings
   }
-  
+
 }
