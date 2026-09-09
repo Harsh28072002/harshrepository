@@ -30,6 +30,9 @@ jobs:
         with:
           terraform_version: "1.15.8"
 
+      - name: Check Terraform Version
+        run: terraform version
+
       - name: Terraform Init - PROD
         run: terraform -chdir=env/PROD init
 
@@ -37,7 +40,7 @@ jobs:
         run: terraform -chdir=env/QA init
 
       - name: Terraform Format Check
-        run: terraform fmt -check -recursive
+        run: terraform fmt -diff -check -recursive
 
       - name: Terraform Validate - PROD
         run: terraform -chdir=env/PROD validate
