@@ -1,7 +1,7 @@
 variable "vnet" {
-  
+
 }
 
 variable "rg" {
-  
+
 }

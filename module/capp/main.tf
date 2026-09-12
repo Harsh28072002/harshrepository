@@ -1,5 +1,5 @@
 resource "azurerm_log_analytics_workspace" "LAW" {
-    for_each = var.capp
+  for_each            = var.capp
   name                = each.value.law_name
   location            = var.rg[each.value.rg_key].location
   resource_group_name = var.rg[each.value.rg_key].rg_name
@@ -8,8 +8,8 @@ resource "azurerm_log_analytics_workspace" "LAW" {
 }
 
 resource "azurerm_container_app_environment" "CENV" {
-     for_each = var.capp
-  name                       = each.value.env_name 
+  for_each                   = var.capp
+  name                       = each.value.env_name
   location                   = var.rg[each.value.rg_key].location
   resource_group_name        = var.rg[each.value.rg_key].rg_name
   logs_destination           = "log-analytics"
@@ -18,7 +18,7 @@ resource "azurerm_container_app_environment" "CENV" {
 
 
 resource "azurerm_container_app" "CAPP" {
-    for_each = var.capp
+  for_each                     = var.capp
   name                         = each.value.app_name
   container_app_environment_id = azurerm_container_app_environment.CENV[each.key].id
   resource_group_name          = var.rg[each.value.rg_key].rg_name
