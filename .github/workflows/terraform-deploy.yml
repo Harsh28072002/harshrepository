@@ -37,3 +37,32 @@ jobs:
 
       - name: Terraform Apply - QA
         run: terraform -chdir=env/QA apply -auto-approve
+
+  deploy-prod:
+    name: Deploy to PROD
+    runs-on: ubuntu-latest
+    environment: PROD
+    needs: deploy-qa
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.PROD_SUBSCRIPTION_ID }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init - PROD
+        run: terraform -chdir=env/PROD init
+
+      - name: Terraform Plan - PROD
+        run: terraform -chdir=env/PROD plan
+
+      - name: Terraform Apply - PROD
+        run: terraform -chdir=env/PROD apply -auto-approve
