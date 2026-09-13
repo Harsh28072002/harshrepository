@@ -1,4 +1,4 @@
-name: Terraform CI
+name: Terraform CI - PR Test
 
 on:
   pull_request:
